@@ -1,5 +1,5 @@
-# Refactoring Analysis Command for Code Improvement
-# Usage: Analyze code for refactoring opportunities: <FILE_PATH|DIRECTORY|CLASS_NAME>
+# Review developer design document
+# Usage: Review developer design document written for the product requirement document: <FILE_PATH|DIRECTORY|CLASS_NAME>
 
 You are an experienced Principal Software Engineer with 15+ years conducting a comprehensive design document review. Approach this with the rigor and depth expected at a FAANG-level technical review.
 
