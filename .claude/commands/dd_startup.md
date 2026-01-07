@@ -1,187 +1,295 @@
 # Startup Evaluation Request - Job Seeker Due Diligence
+# Usage: Evaluate a startup for job seekers: <COMPANY_NAME> [COMPANY_WEBSITE]
 
-You are an experienced startup analyst helping a job seeker evaluate a potential
-employer. Analyze the following company comprehensively from a job seeker's
-risk/opportunity perspective.
+# Parse inputs
+Set COMPANY_NAME to first argument from $Arguments
+Set COMPANY_WEBSITE to second argument from $Arguments (optional)
+Validate that COMPANY_NAME is provided, otherwise error "Please provide the company name to evaluate"
 
-## Company Information
-- **Company Name:** name
-- **Website:** url
-- **Additional Sources:**
-  - **Founder Profile:** url
-  - **Founder Profile:** url
-  - **Cunchbase Profile:** url
-  - **Glassdoor Profile:** url
-  - **Product Demo Website:** url
-  - **LinkedIn Website:** url
+## Objective
+Provide a comprehensive due diligence analysis of the specified startup from a job seeker's risk/opportunity perspective, helping them make an informed career decision.
 
+---
 
-## Analysis Requirements
+## Phase 1: Data Collection (Execute in Parallel)
 
-### 1. FINANCIAL STABILITY & FUNDING (Critical Risk Assessment)
-Analyze and provide:
-- **Funding History:**
-  - Total capital raised to date
-  - Most recent round (amount, date, series, lead investors)
-  - All previous rounds with timeline
-  - Funding gaps or unusual patterns
+### Group 1: Company Fundamentals
+Fetch from these sources simultaneously:
+- **Company Website**: Product info, team page, careers, blog, press releases
+- **Crunchbase**: Funding rounds, investors, team, acquisitions
+- **LinkedIn Company Page**: Employee count, growth trends, job postings
 
-- **Runway Estimate:**
-  - Estimated burn rate (if available)
-  - Likely runway remaining (months)
-  - Signs of financial stress or strength
+### Group 2: Financial & Investor Data
+- **Crunchbase/PitchBook**: All funding rounds, valuations, investors
+- **News Sources**: Recent funding announcements, financial news
+- **SEC Filings**: If any public filings available (Form D, etc.)
 
-- **Investor Quality:**
-  - Profile of lead investors (tier reputation)
-  - Notable board members
-  - Investor follow-on participation (shows confidence)
+### Group 3: Leadership & Culture
+- **LinkedIn**: Founder profiles, leadership team backgrounds
+- **Twitter/X**: Founder activity, communication style
+- **Glassdoor/Blind**: Employee reviews, ratings, interview experiences
+- **GitHub/Tech Blogs**: Technical culture indicators (if applicable)
 
-- **Job Seeker Risk Signals:**
-  - RED FLAGS: Layoffs, down rounds, long gaps between funding, unknown investors
-  - GREEN FLAGS: Top-tier VCs, recent funding, strong runway, profitable
-  - Employment risk level: LOW / MEDIUM / HIGH
+### Group 4: Market & Product
+- **G2/Capterra**: Product reviews (if B2B SaaS)
+- **App Store/Play Store**: App reviews (if consumer app)
+- **News/TechCrunch**: Product announcements, pivots, market positioning
+- **Competitors**: Who else is in this space?
 
-### 2. FOUNDERS & LEADERSHIP TEAM EVALUATION
-Analyze:
-- **Founder Backgrounds:**
-  - Previous companies (successes/failures)
-  - Relevant domain expertise
-  - Educational background
-  - Years of experience in industry
+---
 
-- **Track Record:**
-  - Previous exits (acquisitions, IPOs)
-  - Failed ventures (what happened?)
-  - Leadership at other companies
-  - Industry reputation/credibility
+## Phase 2: Analysis Framework
 
-- **Team Composition:**
-  - Complete leadership team or gaps?
-  - Technical vs business balance
-  - Key hires from notable companies
-  - Team stability (high turnover?)
+### 1. FINANCIAL STABILITY & FUNDING (Weight: 30%)
 
-- **Culture Indicators:**
-  - Founder communication style (social media, blogs)
-  - Company values stated vs demonstrated
-  - Glassdoor/Blind reviews if available
+#### Data to Extract
+| Metric | Value | Source | Confidence |
+|--------|-------|--------|------------|
+| Total Raised | $[X]M | Crunchbase | High/Med/Low |
+| Last Round | Series [X], $[X]M | [Source] | |
+| Last Round Date | [Date] | | |
+| Key Investors | [Names] | | |
+| Valuation (if known) | $[X]M | | |
+| Employee Count | [X] | LinkedIn | |
+| Burn Rate (estimated) | $[X]M/month | Calculated | |
+| Runway (estimated) | [X] months | Calculated | |
 
-- **Job Seeker Assessment:**
-  - Will you learn from these leaders?
-  - Do they have network/credibility for your career?
-  - Leadership stability concerns?
-  - RED/YELLOW/GREEN rating with reasoning
+#### Scoring Rubric
+| Factor | Score 1-5 | Weight |
+|--------|-----------|--------|
+| Runway > 18 months | | 25% |
+| Top-tier investors | | 25% |
+| Recent funding (< 12 months) | | 20% |
+| No layoff history | | 15% |
+| Revenue signals | | 15% |
 
-### 3. PRODUCT-MARKET FIT & VALUE PROPOSITION
-Evaluate:
-- **Product/Service:**
-  - Clear description of what they build
-  - Problem being solved
-  - Target customer profile
-  - Unique differentiation
+**Financial Risk Score**: [X]/5
+**Employment Stability**: LOW / MEDIUM / HIGH RISK
 
-- **Market Analysis:**
-  - Market size and growth trajectory
-  - Competitive landscape
-  - Barriers to entry (moat)
-  - Timing (too early/too late?)
+#### Red Flags to Check
+- [ ] Layoffs in past 24 months
+- [ ] Down round or flat round
+- [ ] > 18 months since last funding
+- [ ] Unknown/non-institutional investors
+- [ ] Founder departures
 
-- **Traction Evidence:**
-  - Customer count/logos
-  - Revenue milestones (if public)
-  - User growth metrics
-  - Product reviews/testimonials
-  - Case studies
+#### Green Flags to Check
+- [ ] Top-tier VCs (a16z, Sequoia, Accel, etc.)
+- [ ] Recent funding with valuation increase
+- [ ] Path to profitability visible
+- [ ] Strong investor follow-on participation
 
-- **Product-Market Fit Signals:**
-  - STRONG FIT: Organic growth, customer testimonials, low churn, expansion revenue
-  - WEAK FIT: Pivot history, vague positioning, no clear customers
-  - Current stage: Pre-PMF / Finding PMF / Strong PMF
+---
 
-- **Value Proposition Clarity:**
-  - Can you explain what they do in one sentence?
-  - Is the value proposition compelling?
-  - Alignment with market needs?
+### 2. FOUNDERS & LEADERSHIP (Weight: 25%)
 
-### 4. GROWTH POTENTIAL & CAREER OPPORTUNITY
-Assess:
-- **Growth Trajectory:**
-  - Historical growth (team size, customers, revenue if available)
-  - Growth rate trends
-  - Market expansion plans
-  - Scaling readiness
+#### Leadership Profile
+| Person | Role | Background | Previous Exits | LinkedIn |
+|--------|------|------------|----------------|----------|
+| [Name] | CEO | [Summary] | [Yes/No - details] | [URL] |
+| [Name] | CTO | [Summary] | | |
 
-- **Exit Potential:**
-  - Acquisition appeal (likely acquirers)
-  - IPO trajectory timeline
-  - Industry M&A activity
-  - Realistic outcomes in 3-5 years
+#### Scoring Rubric
+| Factor | Score 1-5 | Weight |
+|--------|-----------|--------|
+| Relevant domain expertise | | 30% |
+| Previous startup success | | 25% |
+| Team completeness | | 20% |
+| Industry reputation | | 15% |
+| Communication/transparency | | 10% |
 
-- **Career Development Opportunity:**
-  - Role scope expansion potential
-  - Learning opportunities (tech, industry, skills)
-  - Network building (investors, advisors, team)
-  - Resume value (brand name, experience type)
+**Leadership Score**: [X]/5
 
-- **Compensation Upside:**
-  - Equity value potential (realistic scenario)
-  - Role level and responsibility
-  - Market compensation competitiveness
+#### Culture Indicators
+| Source | Rating | Key Themes | Sample Size |
+|--------|--------|------------|-------------|
+| Glassdoor | [X]/5 | [themes] | [n] reviews |
+| Blind | [X]/5 | [themes] | [n] reviews |
+| LinkedIn Comments | | [themes] | |
 
-- **Alternative Opportunity Cost:**
-  - How does this compare to FAANG/established startups?
-  - Risk/reward ratio assessment
+---
 
-## Output Format
+### 3. PRODUCT-MARKET FIT (Weight: 25%)
 
-Provide a structured report with:
+#### Product Summary
+| Aspect | Assessment |
+|--------|------------|
+| **What they do** | [One sentence] |
+| **Target customer** | [Profile] |
+| **Problem solved** | [Pain point] |
+| **Differentiation** | [Unique value] |
+| **Business model** | [How they make money] |
 
-### Executive Summary (2-3 paragraphs)
-High-level recommendation: STRONG CONSIDER / PROCEED WITH CAUTION / AVOID
+#### Market Analysis
+| Factor | Assessment | Source |
+|--------|------------|--------|
+| TAM (Total Addressable Market) | $[X]B | |
+| Market growth rate | [X]% CAGR | |
+| Key competitors | [List] | |
+| Competitive moat | [Weak/Medium/Strong] | |
 
-### Detailed Findings
-Use the four sections above with:
-- Clear headers and subheaders
-- Bullet points for scanability
-- **Bold** for critical findings
-- Specific data points and sources
+#### Traction Evidence
+| Signal | Evidence | Strength |
+|--------|----------|----------|
+| Customer logos | [Names] | Strong/Weak |
+| Revenue indicators | [Any public info] | |
+| User growth | [If available] | |
+| Product reviews | [Rating, count] | |
+| Case studies | [Yes/No] | |
+
+#### PMF Scoring Rubric
+| Factor | Score 1-5 | Weight |
+|--------|-----------|--------|
+| Clear value proposition | | 25% |
+| Evidence of traction | | 30% |
+| Market timing | | 20% |
+| Competitive position | | 25% |
+
+**Product-Market Fit Score**: [X]/5
+**PMF Stage**: Pre-PMF / Finding PMF / Strong PMF
+
+---
+
+### 4. CAREER OPPORTUNITY (Weight: 20%)
+
+#### Growth Potential
+| Factor | Assessment |
+|--------|------------|
+| Company growth trajectory | [Accelerating/Stable/Slowing] |
+| Role scope potential | [High/Medium/Low] |
+| Learning opportunities | [List areas] |
+| Network value | [Investor/advisor quality] |
+| Resume impact | [Strong/Medium/Weak brand] |
+
+#### Exit Scenarios (3-5 year horizon)
+| Scenario | Probability | Your Outcome |
+|----------|-------------|--------------|
+| IPO | [Low/Med/High] | [Equity value estimate] |
+| Acquisition | [Low/Med/High] | [Likely outcome] |
+| Continued growth | [Low/Med/High] | [Career trajectory] |
+| Failure/shutdown | [Low/Med/High] | [Risk mitigation] |
+
+#### Compensation Assessment
+| Factor | Assessment |
+|--------|------------|
+| Base salary competitiveness | [Above/At/Below market] |
+| Equity value (realistic) | [$ range estimate] |
+| Total comp vs. alternatives | [Compare to FAANG/other startups] |
+
+**Career Opportunity Score**: [X]/5
+
+---
+
+## Phase 3: Output Report
+
+### Executive Summary
+| Field | Value |
+|-------|-------|
+| **Company** | [Name] |
+| **Stage** | [Seed/Series A/B/C/etc.] |
+| **Overall Rating** | [X]/10 |
+| **Recommendation** | STRONG CONSIDER / PROCEED WITH CAUTION / AVOID |
+| **Confidence Level** | High / Medium / Low |
+
+[2-3 paragraph summary of key findings and recommendation rationale]
+
+---
+
+### Composite Scorecard
+| Category | Score (1-5) | Weight | Weighted Score |
+|----------|-------------|--------|----------------|
+| Financial Stability | [X] | 30% | [X] |
+| Leadership & Team | [X] | 25% | [X] |
+| Product-Market Fit | [X] | 25% | [X] |
+| Career Opportunity | [X] | 20% | [X] |
+| **TOTAL** | | 100% | **[X]/5** |
+
+---
 
 ### Risk Matrix
-| Risk Category | Level (Low/Med/High) | Key Factors |
-|---------------|----------------------|-------------|
-| Financial | | |
-| Leadership | | |
-| Product | | |
-| Market | | |
+| Risk Category | Level | Key Factors | Mitigation |
+|---------------|-------|-------------|------------|
+| Financial | [1-5] | [Factors] | [What to negotiate/ask] |
+| Leadership | [1-5] | [Factors] | |
+| Product/Market | [1-5] | [Factors] | |
+| Career | [1-5] | [Factors] | |
+
+---
 
 ### SWOT Analysis
-**Strengths:**
-**Weaknesses:**
-**Opportunities:**
-**Threats:**
+| Strengths | Weaknesses |
+|-----------|------------|
+| - [Point] | - [Point] |
+| - [Point] | - [Point] |
 
-### Key Questions to Ask in Interviews
-Provide 8-10 specific questions based on gaps/concerns, such as:
-- "I noticed your Series A was 18 months ago. What's your current runway?"
-- "Can you share customer retention metrics?"
+| Opportunities | Threats |
+|---------------|---------|
+| - [Point] | - [Point] |
+| - [Point] | - [Point] |
+
+---
+
+### Interview Questions to Ask
+Based on identified gaps and concerns, ask these specific questions:
+
+#### Financial Health
+1. "What's your current runway, and what are the plans for the next funding round?"
+2. "Can you share the company's path to profitability?"
+
+#### Leadership & Culture
+3. "How has the leadership team evolved, and what key hires are planned?"
+4. "What's the typical career progression for someone in this role?"
+
+#### Product & Market
+5. "What are your key metrics, and how have they trended over the past 12 months?"
+6. "Who do you see as your main competitors, and what's your differentiation?"
+
+#### Role-Specific
+7. "[Based on specific concerns about the role]"
+8. "[Based on specific concerns about the role]"
+
+---
 
 ### Final Recommendation
-- **Overall Job Seeker Rating:** [X]/10
-- **Best For:** [Type of candidate this suits]
-- **Avoid If:** [Deal-breaker scenarios]
-- **Decision Factors:** [What would tip the decision either way]
+
+**Overall Rating**: [X]/10
+
+**Best For**:
+- [Type of candidate who would thrive here]
+- [Career stage that fits]
+- [Risk tolerance level]
+
+**Avoid If**:
+- [Deal-breaker scenarios]
+- [Risk factors that matter most]
+
+**Negotiation Leverage**:
+- [What to ask for given the risk profile]
+- [Equity considerations]
+
+**Decision Factors**:
+- Key positive: [What could make this great]
+- Key negative: [What could make this fail]
+- Tiebreaker: [What additional info would help decide]
+
+---
+
+### Data Confidence & Limitations
+| Data Category | Confidence | Notes |
+|---------------|------------|-------|
+| Funding data | High/Med/Low | [Source quality] |
+| Team info | High/Med/Low | |
+| Traction data | High/Med/Low | |
+| Culture data | High/Med/Low | [Sample size] |
+
+**Information Gaps**: [List what couldn't be verified]
+
+---
 
 ## Analysis Guidelines
-- Be objective and data-driven
-- Acknowledge information gaps
-- Consider both upside and downside scenarios
-- Focus on verifiable facts over speculation
-- Highlight contradictions or concerns
+- Be objective and data-driven; cite sources
+- Clearly distinguish facts vs. estimates vs. speculation
+- Acknowledge information gaps honestly
 - Compare to industry benchmarks where possible
-- Be honest about risks—this is someone's career decision
-
-## Important Notes
-- If information is unavailable, state clearly: "Not publicly available"
-- Distinguish between facts, informed speculation, and assumptions
-- Provide source citations where possible
+- Remember: This is someone's career decision—be thorough and honest
 - Update assessment if given additional information

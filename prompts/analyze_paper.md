@@ -1,379 +1,321 @@
 # Research Paper Analysis for Software Engineers
+# Usage: Analyze research paper for practical insights: <PAPER_PATH|PAPER_URL>
 
-You are an expert software engineering researcher and practitioner. Your task is to analyze the provided software engineering paper and extract key insights that would be valuable to working engineers and architects.
+# Parse input
+Set PAPER_SOURCE to $Arguments
+Validate that PAPER_SOURCE is provided, otherwise error "Please provide the paper file path or URL to analyze"
 
-## Analysis Structure
+## Objective
+Analyze the provided software engineering research paper and extract key insights valuable to working engineers and architects, with rigorous evidence assessment.
 
-Provide your analysis in the following structure, using evidence-based reasoning and explicit citations.
+---
 
-### Document Metadata
+## Phase 1: Initial Paper Scan (Execute in Parallel)
 
-```
-Paper Title: [Full title]
-Authors: [Author list]
-Publication: [Venue/Journal, Year]
-Paper Type: [Conference/Journal/Workshop/Preprint]
-Research Area: [e.g., Distributed Systems, Testing, Architecture]
-Analysis Date: [Date]
-Paper URL/DOI: [If available]
-```
+### Stream A: Metadata Extraction
+- Title, authors, venue, year
+- Paper type (conference/journal/preprint)
+- Research area classification
+- DOI/URL if available
 
-### Paper Summary
+### Stream B: Structure Analysis
+- Identify main sections
+- Locate methodology section
+- Find evaluation/results section
+- Note appendices and supplementary materials
 
-- Provide a concise 2-3 sentence summary of the paper's main contribution
-- State the problem it addresses and the proposed solution
-- Identify the core claim or thesis of the paper
-- Note the scope and boundaries of the work
+### Stream C: Quick Assessment
+- Read abstract and conclusion
+- Identify core claim/thesis
+- Note stated contributions
+- Check for artifacts (code, data)
 
-**Citation Requirement**: Reference specific sections when stating the problem and solution (e.g., `[§1 Introduction]`, `[§3.2]`)
+---
 
-### Research Context and Prerequisites
+## Phase 2: Deep Analysis (Parallel Streams)
 
-- What prior knowledge or background is assumed?
-- What related work does this build upon? (cite key references)
-- What problem domain or industry context?
-- What scale/size of systems is this relevant for?
-- Technology maturity level:
-  - [ ] Theoretical concept
-  - [ ] Research prototype
-  - [ ] Lab-validated system
-  - [ ] Production-ready
-  - [ ] Industry-deployed
+### Stream 1: Methodology Analysis
+- Study type identification
+- Data collection methods
+- Analysis techniques
+- Validity threats acknowledged
 
-### Research Methodology
+### Stream 2: Technical Content
+- Key algorithms/techniques
+- Architecture/design patterns
+- Performance characteristics
+- Implementation details
 
-Document how the research was conducted:
+### Stream 3: Evidence Assessment
+- Sample sizes and statistical methods
+- Baseline comparisons
+- Reproducibility indicators
+- Limitations stated
 
-- **Study Type**:
-  - [ ] Controlled experiment
-  - [ ] Case study
-  - [ ] Survey/Interview study
-  - [ ] Empirical analysis
-  - [ ] Simulation
-  - [ ] Formal analysis/proof
-  - [ ] System building/engineering
-  - [ ] Literature review/Survey paper
+### Stream 4: Practical Applicability
+- Industry relevance
+- Implementation effort
+- Prerequisites needed
+- When to use/not use
 
-- **Data Collection**:
-  - Sample size and selection criteria
-  - Data sources (industry, open source, synthetic)
-  - Time period covered
-  - Selection methodology
+---
 
-- **Analysis Techniques**:
-  - Statistical methods used
-  - Tools and infrastructure
-  - Evaluation metrics
+## Output Format
 
-- **Reproducibility**:
-  - Is code/data available? (Yes/No/Partial)
-  - Is there enough detail to replicate? (High/Medium/Low)
-  - Artifacts available: [Link if provided]
+### Quick Reference Card
+| Field | Value |
+|-------|-------|
+| **Title** | [Paper title] |
+| **Authors** | [Author list] |
+| **Venue/Year** | [Publication, Year] |
+| **Research Area** | [e.g., Distributed Systems, Testing] |
+| **Paper Type** | Conference / Journal / Preprint |
+| **Maturity Level** | Theoretical / Prototype / Lab-validated / Production-ready |
+| **Evidence Strength** | Strong / Moderate / Weak |
+| **Practical Value** | High / Medium / Low |
+| **Read Recommendation** | Must Read / Skim / Skip |
 
-- **Threats to Validity** (as acknowledged by authors):
-  - Internal validity concerns
-  - External validity concerns
-  - Construct validity concerns
-  - Author-identified limitations `[Cite: §X]`
+---
+
+### Executive Summary (3-5 sentences)
+[Concise summary: What problem? What solution? What evidence? What's the practical takeaway?]
+
+**Core Claim**: [One sentence thesis] `[§1]`
+**Key Finding**: [Most important result] `[§X, Table Y]`
+**Bottom Line**: [Should engineers care? Why/why not?]
+
+---
+
+### Paper Classification
+
+#### Study Type
+- [ ] Controlled experiment
+- [ ] Case study
+- [ ] Survey/Interview
+- [ ] Empirical analysis
+- [ ] System building
+- [ ] Formal analysis/proof
+- [ ] Literature review
+
+#### Technology Maturity
+- [ ] Theoretical concept
+- [ ] Research prototype
+- [ ] Lab-validated system
+- [ ] Production-ready
+- [ ] Industry-deployed
+
+#### Reproducibility
+| Aspect | Available | Quality |
+|--------|-----------|---------|
+| Source code | Yes/No/Partial | [Link if available] |
+| Dataset | Yes/No/Partial | |
+| Methodology detail | High/Med/Low | |
+
+---
 
 ### Key Technical Contributions
 
-List the primary technical innovations or findings:
+| # | Contribution | Evidence Type | Validation | Novelty |
+|---|--------------|---------------|------------|---------|
+| 1 | [What's new] | `[PROVEN/EMPIRICAL/DEMONSTRATED/CLAIMED]` | [How validated] `[§X]` | [vs. prior work] |
+| 2 | | | | |
+| 3 | | | | |
 
-For each contribution, specify:
-
-- **Contribution**: What is the innovation?
-- **Evidence**: What evidence supports it? `[Cite: §X, Table Y, Figure Z]`
-- **Novelty**: What makes this new vs. prior work?
-- **Validation**: How was it validated?
-
-Highlight:
-
-- Novel algorithms, methodologies, or frameworks introduced
-- Performance improvements (with quantitative metrics)
-- New abstractions or design patterns
-- Tools or systems developed
-
-**Evidence Level Indicators**:
-
+**Evidence Level Tags**:
 - `[PROVEN]` - Formally proven or rigorously validated
-- `[EMPIRICAL]` - Supported by experimental data
+- `[EMPIRICAL]` - Supported by experimental data with statistics
 - `[DEMONSTRATED]` - Shown via case study or prototype
-- `[CLAIMED]` - Asserted by authors without strong evidence
+- `[CLAIMED]` - Asserted without strong evidence
 - `[SPECULATIVE]` - Forward-looking or hypothetical
+
+---
+
+### Methodology Assessment
+
+#### Data & Sample
+| Metric | Value | Assessment |
+|--------|-------|------------|
+| Sample size | N = [X] | Adequate / Marginal / Insufficient |
+| Data source | [Industry/OSS/Synthetic] | Representative? |
+| Time period | [Duration] | Current? |
+| Selection method | [How chosen] | Biased? |
+
+#### Statistical Rigor
+| Aspect | Present | Notes |
+|--------|---------|-------|
+| Statistical tests | Yes/No | [Which tests] |
+| P-values reported | Yes/No | [Significance level] |
+| Effect sizes | Yes/No | [Practical significance] |
+| Confidence intervals | Yes/No | |
+| Multiple comparisons | Addressed/Not addressed | |
+
+#### Threats to Validity
+| Type | Acknowledged | Concerns |
+|------|--------------|----------|
+| Internal | [Author-stated `[§X]`] | [Your assessment] |
+| External | [Author-stated] | [Generalizability concerns] |
+| Construct | [Author-stated] | [Measurement issues] |
+
+---
 
 ### Architectural Insights
 
-Extract key architectural patterns, designs, or principles:
+#### Patterns & Principles
+| Pattern/Principle | Description | When Applicable | Trade-offs |
+|-------------------|-------------|-----------------|------------|
+| [Pattern] | [What it is] | [Context] | [What you sacrifice] |
 
-- **Patterns/Principles**: What architectural insights are provided?
-- **Scalability Considerations**: How does it scale? `[Cite evidence]`
-- **Performance Characteristics**: Throughput, latency, resource usage
-- **Reliability/Availability**: Fault tolerance, consistency models
-- **Architectural Trade-offs**:
-  - Decision: [What was chosen]
-  - Trade-off: [What was sacrificed]
-  - Context: [When this trade-off makes sense]
-  - Alternatives: [What else was considered]
+#### Performance Characteristics
+| Metric | Reported Value | Conditions | Baseline Comparison |
+|--------|----------------|------------|---------------------|
+| [Metric] | [Value] `[Table X]` | [Setup] | [vs. alternative] |
+
+#### Scalability
+- **Tested scale**: [What was evaluated] `[§X]`
+- **Theoretical limits**: [If discussed]
+- **Bottlenecks**: [Identified limitations]
+
+---
 
 ### Engineering Takeaways
 
-Provide 3-5 actionable insights that practicing engineers can apply:
+| # | Takeaway | When to Use | When NOT to Use | Effort | Evidence |
+|---|----------|-------------|-----------------|--------|----------|
+| 1 | [Actionable insight] | [Conditions] | [Anti-patterns] | Low/Med/High | `[§X]` |
+| 2 | | | | | |
+| 3 | | | | | |
 
-For each takeaway, specify:
+#### Implementation Checklist
+For each major takeaway, what's needed:
+- [ ] Prerequisites: [What you need first]
+- [ ] Skills required: [Team capabilities]
+- [ ] Estimated effort: [Time/resources]
+- [ ] Expected outcome: [What you'll gain]
 
-| #   | Takeaway             | Applicability    | Implementation Effort | Expected ROI        | Prerequisites         | When to Use  | When NOT to Use | Evidence      |
-| --- | -------------------- | ---------------- | --------------------- | ------------------- | --------------------- | ------------ | --------------- | ------------- |
-| 1   | [Practice/Technique] | [Domain/Context] | Low/Med/High          | Qualitative benefit | [What's needed first] | [Conditions] | [Anti-patterns] | [§X, Table Y] |
-
-Include:
-
-- Specific techniques, best practices, or approaches that can be adopted
-- Tools, frameworks, or technologies mentioned that engineers should be aware of
-- Concrete steps to implement the approach
-- Measurable outcomes to expect
-
-### Implementation Considerations
-
-- **Practical Challenges**: Implementation difficulties mentioned `[Cite: §X]`
-- **Performance Metrics**: Specific benchmarks and evaluation criteria
-  - Present results in table format with baselines
-  - Note experimental setup and conditions
-- **Resource Requirements**:
-  - Hardware/infrastructure needs
-  - Team skills required
-  - Time investment
-- **Integration Points**: How this integrates with existing systems
-- **Limitations and Constraints**: Clearly stated boundaries `[Cite: §X]`
-- **Known Issues**: Bugs, edge cases, or failure modes identified
-
-### Evidence Quality Assessment
-
-#### Quantitative Analysis
-
-- **Sample Size**: N = [number] - Adequate? (Yes/No/Marginal)
-- **Statistical Significance**: P-values, confidence intervals reported?
-- **Effect Size**: Practical significance vs. statistical significance
-- **Baselines**: What was it compared against?
-- **Reproducibility**: Multiple runs? Error bars? Statistical tests?
-
-#### Qualitative Assessment
-
-- **Data Quality**: Representative? Biased? Current?
-- **Generalizability**: Does it apply beyond the study context?
-- **Confounding Factors**: Were alternatives ruled out?
-- **Cherry-picking**: Is negative data included?
-
-#### Validation Against Claims
-
-For major claims, check:
-
-- **Claim**: [Primary claim from paper]
-- **Evidence Provided**: [What supports it]
-- **Evidence Strength**: Strong/Moderate/Weak/Insufficient
-- **Alternative Explanations**: Could results be explained differently?
-
-### Comparison to Existing Approaches
-
-| Approach      | Advantages | Disadvantages | When to Use | Maturity | Evidence Quality |
-| ------------- | ---------- | ------------- | ----------- | -------- | ---------------- |
-| Proposed      | [Pros]     | [Cons]        | [Context]   | [Level]  | [Assessment]     |
-| Alternative 1 | [Pros]     | [Cons]        | [Context]   | [Level]  | [Assessment]     |
-| Alternative 2 | [Pros]     | [Cons]        | [Context]   | [Level]  | [Assessment]     |
-
-- How does this compare to current industry practices?
-- What are alternative solutions to the same problem?
-- Decision matrix: When to choose this approach vs. alternatives
-
-### Industry Relevance
-
-- **Immediate Applicability** (0-1 year):
-  - What can teams adopt today?
-  - Effort: Low/Medium/High
-  - Risk: Low/Medium/High
-
-- **Near-term Relevance** (1-3 years):
-  - Emerging practices to watch
-  - Conditions needed for adoption
-
-- **Long-term Implications** (3+ years):
-  - Potential paradigm shifts
-  - Research directions to monitor
-
-- **Organization Types**:
-  - Best fit: [Startups/Scale-ups/Enterprise/Specific domains]
-  - Project scales: [Small/Medium/Large/Specific sizes]
-  - Team sizes: [Optimal team size/skills]
-
-- **Emerging Trends**: How does this fit into broader industry trends?
+---
 
 ### Critical Analysis
 
 #### Strengths
-
-- What does the paper do well?
-- What are the most valuable contributions?
-- What evidence is most convincing?
+| Strength | Evidence | Confidence |
+|----------|----------|------------|
+| [What's good] | `[§X, Table Y]` | High/Med/Low |
 
 #### Weaknesses
+| Weakness | Impact | Severity |
+|----------|--------|----------|
+| [Methodological issue] | [How it affects conclusions] | High/Med/Low |
+| [Evidence gap] | | |
+| [Generalizability concern] | | |
 
-- **Methodological Issues**:
-  - Sample size limitations
-  - Selection bias
-  - Confounding variables not controlled
-  - Generalization concerns
+#### Claims vs. Evidence Matrix
+| Claim | Evidence Provided | Strength | Alternative Explanations |
+|-------|-------------------|----------|--------------------------|
+| [Major claim] | [Supporting data] | Strong/Mod/Weak | [Other possibilities] |
 
-- **Evidence Gaps**:
-  - Claims without sufficient support
-  - Missing comparisons or baselines
-  - Incomplete evaluation
+#### Bias Check
+- [ ] Funding/conflicts disclosed?
+- [ ] Selection bias in experiments?
+- [ ] Only positive results shown?
+- [ ] Cherry-picked examples?
 
-- **Practical Concerns**:
-  - Scalability questions
-  - Real-world applicability doubts
-  - Missing cost/benefit analysis
+---
 
-#### Validity Assessment
+### Comparison to Alternatives
 
-**Internal Validity**: Do conclusions follow from the data?
+| Approach | Pros | Cons | Best For | Maturity | Evidence |
+|----------|------|------|----------|----------|----------|
+| **This paper** | [Advantages] | [Disadvantages] | [Use case] | [Level] | [Quality] |
+| Alternative 1 | | | | | |
+| Alternative 2 | | | | | |
 
-- Rating: High/Medium/Low
-- Issues: [Specific concerns]
+**Decision Guide**: When to choose this approach vs. alternatives?
 
-**External Validity**: Do results generalize beyond study context?
+---
 
-- Rating: High/Medium/Low
-- Limitations: [What contexts might differ]
+### Industry Relevance
 
-**Construct Validity**: Are the right things being measured?
+#### Adoption Timeline
+| Timeframe | Applicability | Conditions | Risk |
+|-----------|---------------|------------|------|
+| **Now** (0-1 yr) | [What's usable today] | [Prerequisites] | Low/Med/High |
+| **Soon** (1-3 yr) | [Emerging practices] | [What needs to mature] | |
+| **Future** (3+ yr) | [Long-term implications] | [Paradigm shifts] | |
 
-- Rating: High/Medium/Low
-- Concerns: [Measurement issues]
+#### Best Fit
+- **Organization type**: [Startup / Scale-up / Enterprise]
+- **Team size**: [Small / Medium / Large]
+- **Project type**: [Greenfield / Migration / Optimization]
+- **Domain**: [Specific applicability]
 
-#### Bias Detection
+---
 
-- Funding sources or conflicts of interest noted?
-- Selection bias in experiments?
-- Confirmation bias in interpretation?
-- Publication bias (only positive results)?
+### Open Questions
 
-#### Overall Assessment
+| Question | Type | Impact | Who Can Answer |
+|----------|------|--------|----------------|
+| [Unanswered question] | Technical/Practical | [What depends on this] | [Researchers/Industry] |
 
-- **Practical Viability**: Can this be used in production? (Yes/With modifications/Research only)
-- **Evidence Strength**: How confident should we be? (High/Medium/Low)
-- **Recommendation**: Should practicing engineers pay attention? (Definitely/Maybe/No)
-- **Confidence in Assessment**: Your confidence in this analysis (High/Medium/Low)
+**Research Gaps**: [What follow-up work is needed]
+**Practical Gaps**: [What's missing for real-world use]
 
-### Open Research Questions
+---
 
-Based on the paper, what questions remain?
+### Watchlist
 
-- Technical questions requiring further research
-- Practical questions about deployment at scale
-- Validation questions in different contexts
-- Follow-up work suggested by authors `[Cite: §X]`
-- Your identified gaps in the research
+- **Follow-up papers**: [What to track]
+- **Researchers**: [Key people in this area]
+- **Projects/Tools**: [Related implementations]
+- **Adoption signals**: [How to know if this goes mainstream]
 
-### Future Implications and Watchlist
+---
 
-- **Short-term** (0-1 year): Immediately applicable insights
-- **Medium-term** (1-3 years): Emerging practices to monitor
-- **Long-term** (3+ years): Potential paradigm shifts
-- **Related Work to Follow**: Papers, researchers, or projects to track
-- **Industry Adoption Signals**: What would indicate this is going mainstream?
+### Final Assessment
 
-### Analysis Quality Checklist
+| Dimension | Rating | Notes |
+|-----------|--------|-------|
+| **Methodological Rigor** | 1-5 | [Brief justification] |
+| **Evidence Quality** | 1-5 | |
+| **Practical Applicability** | 1-5 | |
+| **Novelty** | 1-5 | |
+| **Clarity** | 1-5 | |
+| **OVERALL** | 1-5 | |
 
-Before finalizing your analysis, verify:
+**Verdict**:
+- [ ] **Must Read** - Significant, well-supported findings with immediate applicability
+- [ ] **Worth Reading** - Useful insights, some limitations
+- [ ] **Skim** - Interesting ideas, weak evidence or limited applicability
+- [ ] **Skip** - Poor methodology or not relevant
 
-- [ ] Paper's core claim clearly identified and cited
-- [ ] Research methodology documented (type, sample, validity)
-- [ ] Evidence type and quality assessed for major claims
-- [ ] Quantitative results include sample sizes and statistical measures
-- [ ] Practical applicability evaluated with context
-- [ ] Implementation effort estimated (Low/Medium/High)
-- [ ] Context and prerequisites identified
-- [ ] Comparisons to alternatives included
-- [ ] Trade-offs explicitly stated
-- [ ] Bias and validity concerns addressed
-- [ ] Limitations acknowledged
-- [ ] Citations provided for all major points
-- [ ] Evidence level tags used (`[PROVEN]`, `[EMPIRICAL]`, etc.)
-- [ ] Confidence levels stated where appropriate
-- [ ] Both strengths and weaknesses identified
-- [ ] Industry relevance assessed across time horizons
+**Confidence in Assessment**: High / Medium / Low
+**Caveat**: [Any important limitations of this analysis]
 
-## Important Guidelines
+---
 
-### Objectivity and Rigor
-
-- **Evidence-Based**: Every major claim should cite specific sections, tables, or figures
-- **Distinguish Claims from Evidence**: Mark whether something is proven, demonstrated, or claimed
-- **Acknowledge Uncertainty**: Use confidence indicators when appropriate
-- **Balanced Assessment**: Include both strengths and weaknesses
-- **No Unwarranted Extrapolation**: Stay within what the paper actually demonstrates
+## Analysis Guidelines
 
 ### Citation Standards
+- Section: `[§3.2]`
+- Table: `[Table 2]`
+- Figure: `[Figure 4]`
+- Inference: `[Inferred from §3.2: ...]`
+- Interpretation: `[One interpretation: ...]`
+- Gap: `[Not addressed in paper]`
 
-- Use format: `[§3.2]` for sections, `[Table 2]` for tables, `[Figure 4]` for figures
-- When inferring: `[Inferred from §3.2: ...]`
-- When interpreting: `[One interpretation of §4.1: ...]`
-- When unsure: `[Unclear from paper: ...]`
+### Evidence Assessment
+Always distinguish:
+- What is **proven** vs. **demonstrated** vs. **claimed**
+- What is **statistically significant** vs. **practically significant**
+- What **generalizes** vs. what is **context-specific**
 
-### Evidence Level Tags
-
-Apply these consistently:
-
-- `[PROVEN]` - Formally proven, mathematically rigorous
-- `[EMPIRICAL]` - Supported by experimental data with statistical validation
-- `[DEMONSTRATED]` - Shown via case study, prototype, or example
-- `[CLAIMED]` - Asserted without strong evidence
-- `[SPECULATIVE]` - Forward-looking, hypothetical, or future work
-
-### Confidence Indicators
-
-When making assessments, indicate confidence:
-
-- **High Confidence**: Strong evidence, clear results, robust methodology
-- **Medium Confidence**: Reasonable evidence, some limitations
-- **Low Confidence**: Limited evidence, significant concerns, requires verification
+### Objectivity
+- Include both strengths AND weaknesses
+- Don't extrapolate beyond what paper demonstrates
+- Acknowledge uncertainty with confidence levels
+- Consider alternative explanations
 
 ### Practical Focus
-
-- Prioritize insights that bridge academic research and practical engineering
-- Focus on actionable takeaways over theoretical details
-- Assess real-world applicability, not just novelty
+- Prioritize actionable insights over theoretical contributions
+- Assess real-world applicability, not just academic novelty
 - Consider cost/benefit from engineering perspective
 - Identify prerequisites and barriers to adoption
-
-### Critical Thinking
-
-- Question methodology and evidence quality
-- Look for confounding factors and alternative explanations
-- Assess generalizability carefully
-- Don't assume industry relevance without evidence
-- Distinguish correlation from causation
-- Consider what's NOT said in the paper
-
-## Common Pitfalls to Avoid
-
-1. **Accepting claims uncritically**: Always assess evidence quality
-2. **Ignoring methodology**: How something was studied matters as much as results
-3. **Overgeneralizing**: Small studies may not apply broadly
-4. **Missing context**: Results are often context-dependent
-5. **Overlooking limitations**: Authors may understate weaknesses
-6. **Confusing novelty with utility**: Novel ≠ practically useful
-7. **Ignoring alternatives**: Compare against baselines and other approaches
-8. **Skipping validation**: Check if claims are actually supported by data
-9. **Missing the forest for trees**: Focus on insights engineers can use
-10. **Uncited assertions**: All major points should have citations
-
-## Output Format
-
-- Use well-formatted Markdown with clear headings
-- Include tables for comparisons and structured data
-- Use bullet points for lists and key points
-- Bold key terms and important findings
-- Use blockquotes for direct paper quotes (with citations)
-- Include evidence tags consistently
-- Make it scannable - engineers should be able to quickly find relevant insights

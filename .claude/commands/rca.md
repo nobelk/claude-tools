@@ -1,12 +1,17 @@
 # Analyze Exception and Provide Fix
+# Usage: Analyze exception and identify root cause: <EXCEPTION_FILE>
+
+# Parse exception file
+Set EXCEPTION_FILE to $Arguments
+Validate that EXCEPTION_FILE is provided, otherwise error "Please provide the exception file path to analyze"
 
 ## Objective
-Analyze the exception details in `{{EXCEPTION_FILE}}` and identify the root cause bug in the codebase. Provide a comprehensive fix with unit tests.
+Analyze the exception details in the provided file and identify the root cause bug in the codebase. Provide a comprehensive fix with unit tests.
 
 ## Instructions
 
 ### Step 1: Exception Analysis
-1. Read the exception file: `{{EXCEPTION_FILE}}`
+1. Read the exception file provided as argument
 2. Extract and parse:
    - Exception type and message
    - Full stack trace
@@ -169,7 +174,7 @@ Provide instructions to verify the fix:
 - Suggest monitoring/alerting improvements to catch this earlier
 
 ## Example Usage
-To use this command, replace `{{EXCEPTION_FILE}}` with the actual file name:
 ```
-Analyze the exception details in `exceptions.txt` and identify the root cause...
+/rca path/to/exception.log
+/rca errors/NullPointerException.txt
 ```

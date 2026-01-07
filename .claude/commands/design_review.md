@@ -197,12 +197,6 @@ Use a systematic approach across these dimensions:
 - Serverless vs container cost analysis
 - Data transfer and storage costs
 
-### Cost Optimization
-- Resource efficiency
-- Reserved vs on-demand instances
-- Serverless vs container cost analysis
-- Data transfer and storage costs
-
 ## 11. CROSS-CUTTING CONCERNS
 
 ### Compliance & Governance

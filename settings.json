@@ -1,0 +1,15 @@
+{
+    "permissions": {
+        "defaultMode": "plan",
+        "allow": [
+            "Bash(cat:*)",
+            "Bash(ls:*)",
+            "Bash(git status:*)",
+            "Bash(git add:*)",
+            "Bash(git commit:*)",
+            "Bash(git push:*)",
+            "Bash(git diff:*)",
+            "Bash(find:*)"
+        ]
+    }
+}

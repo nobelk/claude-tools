@@ -5,82 +5,133 @@
 Set PR_IDENTIFIER to $Arguments
 Validate that PR_IDENTIFIER is provided, otherwise error "Please provide a pull request number, URL, or branch name"
 
-# Step 1: Gather Context
-## Fetch PR information and changes
-- If PR_IDENTIFIER is a number, use: git fetch origin pull/${PR_IDENTIFIER}/head:pr-${PR_IDENTIFIER}
-- If PR_IDENTIFIER is a branch, use: git fetch origin ${PR_IDENTIFIER}
-- Get the diff: git diff origin/main...${PR_IDENTIFIER}
-- Get commit history: git log --oneline origin/main...${PR_IDENTIFIER}
-- List changed files: git diff --name-status origin/main...${PR_IDENTIFIER}
+# Step 1: Gather Context (Execute in Parallel)
 
-# Step 2: Comprehensive Code Review
-Perform a thorough analysis of the pull request covering:
+## 1.1 Fetch PR Information
+Execute these commands based on identifier type:
+- If PR_IDENTIFIER is a URL: Extract PR number using `gh pr view <URL> --json number`
+- If PR_IDENTIFIER is a number: Use `gh pr view <number> --json title,body,author,baseRefName,headRefName,files,additions,deletions`
+- If PR_IDENTIFIER is a branch: Use `git fetch origin ${PR_IDENTIFIER}`
 
-## 2.1 Code Quality & Design
-- Analyze architectural decisions and overall design approach
-- Evaluate adherence to SOLID principles (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion)
-- Identify opportunities to apply Gang of Four design patterns where appropriate
-- Check for code duplication and suggest DRY improvements
-- Review naming conventions and code readability
+## 1.2 Gather Change Context (Run in Parallel)
+Execute these simultaneously:
+```
+# Group 1: PR metadata
+gh pr view ${PR_IDENTIFIER} --json title,body,labels,reviewDecision,commits
 
-## 2.2 Implementation Review
-- Identify potential bugs, edge cases, and error conditions
-- Check error handling and exception management
-- Review resource management (memory leaks, file handles, connections)
-- Validate input sanitization and data validation
-- Assess algorithm efficiency and data structure choices
+# Group 2: File changes
+gh pr diff ${PR_IDENTIFIER}
+gh pr view ${PR_IDENTIFIER} --json files --jq '.files[].path'
 
-## 2.3 Security Analysis
-- Check for common security vulnerabilities (injection, XSS, CSRF, etc.)
-- Review authentication and authorization logic
-- Identify sensitive data exposure risks
-- Validate cryptographic implementations
-- Check for dependency vulnerabilities
+# Group 3: Commit history
+gh pr view ${PR_IDENTIFIER} --json commits --jq '.commits[].messageHeadline'
+git log --oneline origin/main..HEAD (if branch)
 
-## 2.4 Performance Considerations
-- Identify potential performance bottlenecks
-- Review database queries for N+1 problems
+# Group 4: Stats
+gh pr view ${PR_IDENTIFIER} --json additions,deletions,changedFiles
+```
+
+## 1.3 Identify Changed File Types
+Categorize files for targeted review:
+- Source code files (prioritize)
+- Test files (review for coverage)
+- Configuration files (security review)
+- Documentation files (accuracy check)
+- Build/dependency files (vulnerability check)
+
+# Step 2: Parallel Code Analysis
+
+Execute these review streams in parallel, then merge findings:
+
+## Stream A: Security & Risk Analysis
+- Scan for hardcoded secrets, API keys, credentials
+- Check for SQL injection, XSS, CSRF vulnerabilities
+- Review authentication/authorization changes
+- Identify sensitive data exposure
+- Check dependency changes for known CVEs
+
+## Stream B: Code Quality Analysis
+- Evaluate SOLID principles adherence
+- Identify code duplication (DRY violations)
+- Check naming conventions and readability
+- Assess cyclomatic complexity
+- Review error handling patterns
+
+## Stream C: Performance Analysis
+- Identify N+1 query patterns
 - Check for unnecessary loops or computations
+- Review database query efficiency
 - Evaluate caching opportunities
-- Consider scalability implications
+- Assess memory/resource management
 
-## 2.5 Test Coverage Analysis
-- Calculate test coverage percentage for new/changed code
-- Identify untested code paths and edge cases
+## Stream D: Test Coverage Analysis
+- Map changed code to test files
+- Identify untested code paths
 - Review test quality and assertions
-- Check for test anti-patterns (e.g., testing implementation details)
-- Suggest additional test scenarios for critical paths
-- Verify integration and end-to-end test coverage
+- Check for test anti-patterns
+- Verify edge case coverage
 
-## 2.6 Documentation & Maintainability
-- Review inline comments and documentation
-- Check if public APIs are properly documented
-- Verify README updates for new features
-- Assess code complexity and suggest simplifications
-- Review logging and debugging capabilities
+# Step 3: Detailed Review Checklist
 
-# Step 3: Categorize and Prioritize Findings
-Organize all findings into the following priority levels:
+## 3.1 Code Quality & Design
+- [ ] Architectural decisions align with existing patterns
+- [ ] SOLID principles followed
+- [ ] No code duplication
+- [ ] Clear naming conventions
+- [ ] Appropriate abstraction levels
+
+## 3.2 Implementation
+- [ ] Edge cases handled
+- [ ] Error handling is comprehensive
+- [ ] Resources properly managed (closed/released)
+- [ ] Input validation present
+- [ ] Algorithms are efficient
+
+## 3.3 Security (OWASP)
+- [ ] No injection vulnerabilities
+- [ ] Authentication/authorization correct
+- [ ] Sensitive data protected
+- [ ] No hardcoded secrets
+- [ ] Dependencies are secure
+
+## 3.4 Performance
+- [ ] No N+1 queries
+- [ ] Efficient algorithms used
+- [ ] Caching considered
+- [ ] No unnecessary operations
+- [ ] Scalability maintained
+
+## 3.5 Testing
+- [ ] New code has tests
+- [ ] Edge cases tested
+- [ ] Tests are meaningful (not just coverage)
+- [ ] No test anti-patterns
+- [ ] Integration tests if needed
+
+## 3.6 Documentation
+- [ ] Complex logic documented
+- [ ] Public APIs documented
+- [ ] README updated if needed
+- [ ] Breaking changes noted
+
+# Step 4: Categorize Findings
 
 ## CRITICAL (Must fix before merge)
-- Security vulnerabilities
-- Data loss risks
-- Breaking changes without migration path
-- Severe performance regressions
+- Security vulnerabilities (injection, auth bypass, data exposure)
+- Data loss or corruption risks
+- Breaking changes without migration
 - Failing tests or broken functionality
 
 ## HIGH (Should fix before merge)
 - Significant bugs or logic errors
 - Missing critical test coverage
-- Major design flaws
-- Performance issues
-- Non-backward compatible changes
+- Major performance regressions
+- Design flaws affecting maintainability
 
 ## MEDIUM (Consider fixing)
 - Code quality issues
-- Missing non-critical tests
+- Minor test gaps
 - Documentation gaps
-- Minor performance improvements
 - Refactoring opportunities
 
 ## LOW (Nice to have)
@@ -88,34 +139,100 @@ Organize all findings into the following priority levels:
 - Minor optimizations
 - Additional test scenarios
 - Code organization improvements
-- Future enhancement suggestions
 
-# Step 4: Generate Structured Output
-Provide a comprehensive review in the following format:
+# Step 5: Generate Structured Output
 
-## Executive Summary
-- Brief overview of the PR's purpose and scope
-- Overall assessment (Approve/Request Changes/Comment)
-- Key risks or concerns
+## Output Format
 
-## Detailed Findings
-[Organize by category and priority as defined above]
+### PR Review Summary
+| Field | Value |
+|-------|-------|
+| **PR** | #[number] - [title] |
+| **Author** | [author] |
+| **Branch** | [head] → [base] |
+| **Files Changed** | [count] |
+| **Lines** | +[additions] / -[deletions] |
+| **Verdict** | ✅ APPROVE / ⚠️ REQUEST CHANGES / 💬 COMMENT |
 
-## Positive Aspects
-- Well-implemented features or improvements
-- Good practices observed
+### Risk Assessment
+| Category | Risk Level | Issues Found |
+|----------|------------|--------------|
+| Security | [LOW/MED/HIGH/CRIT] | [count] |
+| Performance | [LOW/MED/HIGH/CRIT] | [count] |
+| Code Quality | [LOW/MED/HIGH/CRIT] | [count] |
+| Test Coverage | [LOW/MED/HIGH/CRIT] | [count] |
 
-## Action Items
-- Numbered list of required changes
-- Suggested improvements with examples
+### Executive Summary
+[2-3 sentences: What does this PR do? What's the overall assessment? Key concerns?]
 
-## Code Examples
-- Provide specific code snippets for suggested improvements
-- Include "before" and "after" examples where helpful
+### Findings by Priority
 
-# Step 5: Follow-up Recommendations
-- Suggest follow-up PRs for larger refactoring
-- Recommend monitoring or metrics to track
-- Identify technical debt to address later
+#### CRITICAL Issues
+| # | File | Line | Issue | Recommendation |
+|---|------|------|-------|----------------|
+| 1 | [file] | [line] | [description] | [fix] |
 
-# Note: Focus on constructive feedback that helps improve the code while maintaining a collaborative tone
+#### HIGH Priority Issues
+| # | File | Line | Issue | Recommendation |
+|---|------|------|-------|----------------|
+| 1 | [file] | [line] | [description] | [fix] |
+
+#### MEDIUM Priority Issues
+[Similar table format]
+
+#### LOW Priority Issues
+[Similar table format or bullet list]
+
+### Positive Observations
+- [Good practices noticed]
+- [Well-implemented features]
+- [Clean code examples]
+
+### Code Suggestions
+For significant issues, provide before/after examples:
+
+**Issue**: [Description]
+**File**: `[path/to/file.ext]:[line]`
+
+Before:
+```
+[problematic code]
+```
+
+After:
+```
+[suggested fix]
+```
+
+### Test Coverage Analysis
+| Changed File | Test File | Coverage | Status |
+|--------------|-----------|----------|--------|
+| [source] | [test] | [%] | ✅/⚠️/❌ |
+
+### Action Items Checklist
+- [ ] [Required change 1]
+- [ ] [Required change 2]
+- [ ] [Suggested improvement 1]
+
+### Follow-up Recommendations
+- Future PRs or technical debt items
+- Monitoring suggestions
+- Documentation needs
+
+---
+
+# Review Guidelines
+
+## Efficiency Tips
+- Start with high-risk files (auth, payments, data access)
+- Check test files alongside source files
+- Use file categorization to prioritize effort
+- Skip generated/vendored files
+
+## Tone & Approach
+- Be constructive and specific
+- Explain the "why" behind suggestions
+- Acknowledge good work
+- Distinguish between blockers and suggestions
+- Use "Consider..." for optional improvements
+- Use "Must..." for required changes

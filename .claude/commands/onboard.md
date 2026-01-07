@@ -1,179 +1,285 @@
 # Comprehensive Codebase Analysis & Onboarding Documentation
+# Usage: Analyze codebase and generate onboarding documentation
 
 ## Objective
 Perform an exhaustive analysis of this codebase to create a comprehensive onboarding document that enables new developers to understand the system quickly and effectively.
 
-## Analysis Requirements
+## Analysis Strategy
 
-### Phase 1: Deep Code Analysis
-1. **Examine ALL code files** in the repository:
-   - Read and analyze every source file, understanding the purpose and relationships
-   - Study the control flow, data flow, and dependencies between modules
-   - Identify design patterns, architectural decisions, and coding conventions
-   - Note any complex algorithms, performance optimizations, or technical debt
+### Phase 1: Rapid Discovery (Execute in Parallel)
 
-2. **Review ALL tests**:
-   - Analyze unit tests, integration tests, and end-to-end tests
-   - Understand test coverage and testing strategies
-   - Identify gaps in test coverage
-   - Note any failing, flaky, or disabled tests
+Run these discovery tasks simultaneously:
 
-3. **Study ALL documentation**:
-   - Review README files, API documentation, and inline comments
-   - Analyze configuration files and their purposes
-   - Examine any architectural decision records (ADRs)
-   - Note discrepancies between documentation and actual implementation
+**Group 1: Project Structure**
+```bash
+# Get directory structure
+find . -type f -name "*.json" -o -name "*.yaml" -o -name "*.yml" | head -20
+ls -la
+cat package.json OR cat pom.xml OR cat build.gradle OR cat Cargo.toml (detect project type)
+```
 
-4. **Evaluate code comments**:
-   - Assess the quality and accuracy of inline comments
-   - Identify outdated or misleading comments
-   - Note missing documentation for complex logic
+**Group 2: Entry Points**
+```bash
+# Find main entry points
+grep -r "main\|entry\|start\|bootstrap" --include="*.json" .
+find . -name "main.*" -o -name "index.*" -o -name "app.*" -o -name "server.*"
+```
 
-### Phase 2: Synthesis & Documentation
+**Group 3: Configuration**
+```bash
+# Find config files
+find . -name "*.env*" -o -name "*.config.*" -o -name "docker-compose*"
+find . -name "Dockerfile" -o -name "*.yaml" -o -name "*.yml"
+```
 
-Create an `onboarding.md` file with the following sections:
+**Group 4: Documentation**
+```bash
+# Find existing docs
+find . -name "README*" -o -name "*.md" -o -name "docs"
+find . -name "CONTRIBUTING*" -o -name "CHANGELOG*"
+```
 
-#### 1. Executive Summary (2-3 paragraphs)
-- What does this application/system do?
-- Who are the primary users?
-- What problem does it solve?
+### Phase 2: Deep Code Analysis (Parallel Streams)
 
-#### 2. Architecture Overview
-- **High-Level Architecture**: Describe the overall system design
-- **Key Components**: List and explain major modules/services
-- **Data Flow**: Explain how data moves through the system
-- **External Dependencies**: APIs, databases, third-party services
+Execute these analysis streams concurrently:
 
-#### 3. Architecture Diagram
-Create a clear ASCII or Mermaid diagram showing:
-- System components and their relationships
-- Data flow between components
-- External integrations
-- Database/storage layers
+**Stream A: Architecture Analysis**
+- Identify architectural patterns (MVC, microservices, monolith, etc.)
+- Map module dependencies and relationships
+- Trace data flow from entry to exit points
+- Identify external integrations (APIs, databases, services)
 
-Example format:
+**Stream B: Source Code Analysis**
+- Read and understand core business logic
+- Identify design patterns in use
+- Note coding conventions and style
+- Flag complex algorithms or non-obvious logic
+
+**Stream C: Test Analysis**
+- Analyze test structure and coverage
+- Identify testing strategies (unit, integration, e2e)
+- Note any failing or disabled tests
+- Assess test quality and maintainability
+
+**Stream D: Documentation Analysis**
+- Review all README files
+- Check inline code comments
+- Find API documentation
+- Identify documentation gaps
+
+### Phase 3: Synthesis
+
+Merge findings from all streams and create the onboarding document.
+
+---
+
+## Output: onboarding.md Structure
+
+Generate a single `onboarding.md` file with these sections:
+
+### 1. Quick Start (Most Important - Put First)
+```markdown
+## Quick Start
+
+### Prerequisites
+- [Required tools and versions]
+
+### Setup (< 5 minutes)
+1. Clone: `git clone [repo]`
+2. Install: `[package manager] install`
+3. Configure: `cp .env.example .env`
+4. Run: `[command to start]`
+
+### Verify It Works
+- Visit: http://localhost:[port]
+- Run tests: `[test command]`
+```
+
+### 2. What Is This? (Executive Summary)
+| Field | Value |
+|-------|-------|
+| **Purpose** | [One sentence description] |
+| **Users** | [Who uses this] |
+| **Problem Solved** | [What problem it solves] |
+| **Tech Stack** | [Primary technologies] |
+
+[2-3 paragraph detailed description]
+
+### 3. Architecture Overview
+
+#### System Diagram
 ```mermaid
 graph TD
-    A[Component] --> B[Component]
-    B --> C[Database]
+    subgraph "Frontend"
+        A[Client App]
+    end
+    subgraph "Backend"
+        B[API Server]
+        C[Worker]
+    end
+    subgraph "Data"
+        D[(Database)]
+        E[(Cache)]
+    end
+    A --> B
+    B --> D
+    B --> E
+    B --> C
 ```
 
-#### 4. Technology Stack
-Organize by category:
-- **Languages**: Programming languages used
-- **Frameworks**: Web frameworks, testing frameworks
-- **Libraries**: Key dependencies and their purposes
-- **Infrastructure**: Databases, message queues, caching
-- **DevOps**: CI/CD, containerization, orchestration
-- **Development Tools**: Build tools, linters, formatters
+#### Key Components
+| Component | Location | Responsibility |
+|-----------|----------|----------------|
+| [Name] | `src/[path]` | [What it does] |
 
-#### 5. Project Structure
+#### Data Flow
+1. [Step 1: Request comes in...]
+2. [Step 2: Processing happens...]
+3. [Step 3: Response returned...]
+
+### 4. Technology Stack
+| Category | Technology | Version | Purpose |
+|----------|------------|---------|---------|
+| Language | [e.g., TypeScript] | [version] | [why chosen] |
+| Framework | [e.g., Express] | [version] | [why chosen] |
+| Database | [e.g., PostgreSQL] | [version] | [why chosen] |
+| Cache | [e.g., Redis] | [version] | [why chosen] |
+| Testing | [e.g., Jest] | [version] | [why chosen] |
+
+### 5. Project Structure
 ```
-/src
-  /components - Brief description
-  /services - Brief description
-  /utils - Brief description
+/
+├── src/
+│   ├── api/          # REST API endpoints
+│   ├── services/     # Business logic
+│   ├── models/       # Data models
+│   ├── utils/        # Shared utilities
+│   └── config/       # Configuration
+├── tests/            # Test files
+├── docs/             # Documentation
+└── scripts/          # Build/deploy scripts
 ```
 
-#### 6. Key Concepts & Patterns
-- Design patterns employed
-- Important abstractions or domain concepts
-- Coding conventions and style guide adherence
+### 6. Key Concepts & Patterns
+| Concept | Description | Example Location |
+|---------|-------------|------------------|
+| [Pattern name] | [Brief explanation] | `src/[file]:[line]` |
 
-#### 7. Development Workflow
-- How to set up the development environment
-- How to run the application locally
-- How to run tests
-- How to build and deploy
+### 7. Common Tasks
 
-#### 8. Issues & Improvements
+#### Adding a New Feature
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
 
-##### 🔴 CRITICAL Priority
-List issues that:
-- Could cause data loss or security vulnerabilities
-- Block core functionality
-- Violate critical business requirements
+#### Adding a New API Endpoint
+1. [Step 1]
+2. [Step 2]
 
-##### 🟠 HIGH Priority
-List issues that:
-- Significantly impact user experience
-- Cause frequent errors or failures
-- Create substantial technical debt
+#### Running Tests
+```bash
+# All tests
+[command]
 
-##### 🟡 MEDIUM Priority
-List issues that:
-- Impact code maintainability
-- Reduce developer productivity
-- Need refactoring for clarity
+# Specific test
+[command]
 
-##### 🟢 LOW Priority
-List issues that:
-- Are cosmetic or style-related
-- Minor optimization opportunities
-- Nice-to-have improvements
+# With coverage
+[command]
+```
 
-**For each issue, provide:**
-- **Issue**: Clear description of the problem
-- **Location**: File(s) and line numbers
-- **Impact**: Why this matters
-- **Suggestion**: Specific recommendation to fix
-- **Effort**: Estimated complexity (Small/Medium/Large)
+#### Debugging
+- [How to debug locally]
+- [Key log locations]
+- [Common issues and solutions]
 
-### Phase 3: Quality Checks
+### 8. Entry Points & Important Files
+| File | Purpose | When You'd Modify It |
+|------|---------|---------------------|
+| `src/index.ts` | Application entry | Rarely |
+| `src/routes/` | API routes | Adding endpoints |
+| `src/services/` | Business logic | Adding features |
+| `src/config/` | Configuration | Environment changes |
 
-Before finalizing, verify:
-- [ ] All sections are complete and accurate
-- [ ] Architecture diagram is clear and renders correctly
-- [ ] Issues are specific with actionable suggestions
-- [ ] Technical terms are explained for newcomers
-- [ ] Document is concise (aim for one page, max two if complex)
-- [ ] No assumptions about prior knowledge of the codebase
+### 9. External Dependencies & Integrations
+| Service | Purpose | Config Location | Documentation |
+|---------|---------|-----------------|---------------|
+| [Service] | [Why used] | `[config file]` | [Link] |
+
+### 10. Issues & Technical Debt
+
+#### 🔴 CRITICAL
+| Issue | Location | Impact | Suggested Fix | Effort |
+|-------|----------|--------|---------------|--------|
+| [Issue] | `[file:line]` | [Impact] | [Fix] | [S/M/L] |
+
+#### 🟠 HIGH
+| Issue | Location | Impact | Suggested Fix | Effort |
+|-------|----------|--------|---------------|--------|
+
+#### 🟡 MEDIUM
+| Issue | Location | Impact | Suggested Fix | Effort |
+|-------|----------|--------|---------------|--------|
+
+#### 🟢 LOW
+[Bullet list for minor items]
+
+### 11. Glossary
+| Term | Definition |
+|------|------------|
+| [Domain term] | [What it means in this codebase] |
+
+### 12. Resources & References
+- [Link to API docs]
+- [Link to design docs]
+- [Link to runbooks]
+- [Team contacts]
+
+---
 
 ## Analysis Instructions
 
-1. **Think deeply** before writing. Consider:
-   - How would a new developer approach this codebase?
-   - What are the most confusing or complex parts?
-   - What context is missing from the documentation?
+### Efficiency Guidelines
+1. **Start with package files** - They reveal the tech stack immediately
+2. **Find entry points first** - Follow the code flow from there
+3. **Use parallel analysis** - Run multiple searches simultaneously
+4. **Prioritize by impact** - Focus on core business logic first
+5. **Skip generated code** - Don't analyze node_modules, dist, build folders
 
-2. **Be thorough** in your analysis:
-   - Don't just skim—read and understand each file
-   - Follow function calls and trace execution paths
-   - Understand the "why" behind architectural decisions
+### Search Patterns to Use
+```bash
+# Find main logic
+grep -r "class\|function\|export" --include="*.ts" --include="*.js" src/
 
-3. **Be specific** in your findings:
-   - Reference exact file names and line numbers
-   - Provide concrete examples of issues
-   - Give actionable recommendations, not vague suggestions
+# Find API endpoints
+grep -r "@Get\|@Post\|router\.\|app\." --include="*.ts" --include="*.js" .
 
-4. **Be honest** about issues:
-   - Don't sugarcoat problems
-   - Prioritize based on actual impact, not severity of wording
-   - Acknowledge well-designed parts of the codebase too
+# Find database operations
+grep -r "query\|find\|save\|update\|delete" --include="*.ts" --include="*.js" src/
 
-5. **Be concise** in your writing:
-   - Use clear, direct language
-   - Avoid jargon where possible, explain it where necessary
-   - Make every sentence count
+# Find configuration
+grep -r "process.env\|config\." --include="*.ts" --include="*.js" src/
 
-## Output Format
+# Find error handling
+grep -r "catch\|throw\|Error" --include="*.ts" --include="*.js" src/
+```
 
-Generate a single `onboarding.md` file that:
-- Uses Markdown formatting for readability
-- Includes a table of contents with links
-- Uses appropriate headers, lists, and code blocks
-- Includes diagrams (Mermaid preferred, ASCII acceptable)
-- Fits within 2 pages when printed (prefer 1 page)
-- Is immediately useful to a new team member
+### Quality Checklist
+Before finalizing, verify:
+- [ ] Quick Start section is complete and tested
+- [ ] Architecture diagram renders correctly
+- [ ] All file paths are accurate
+- [ ] Issues have specific locations and fixes
+- [ ] No jargon without explanation
+- [ ] Document is actionable, not just descriptive
 
-## Success Criteria
-
-A successful onboarding document should enable a new developer to:
-1. Understand what the system does and why it exists
-2. Navigate the codebase confidently
-3. Make their first contribution within days, not weeks
-4. Understand where technical debt exists
-5. Know what tools and technologies they need to learn
+### Success Criteria
+A new developer should be able to:
+1. ✅ Set up and run the project in < 15 minutes
+2. ✅ Understand what the system does in < 5 minutes
+3. ✅ Find any component in < 2 minutes
+4. ✅ Make their first change in < 1 day
+5. ✅ Know where technical debt exists
 
 ---
 
