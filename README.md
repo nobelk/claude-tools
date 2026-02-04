@@ -1,304 +1,403 @@
-# Claude Commands for Software Engineering
+# Claude Code Skills & Prompts
 
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 
-A curated collection of Claude Code slash commands designed to streamline software engineering workflows. These commands leverage Claude's advanced capabilities to provide automated code analysis, design reviews, debugging assistance, and comprehensive documentation generation.
+A curated collection of Claude Code skills and prompt templates designed to streamline software engineering workflows. These skills leverage Claude's advanced capabilities to provide automated code analysis, design reviews, security scanning, and comprehensive documentation generation.
 
 ## Installation
 
 1. **Clone or download this repository**:
    ```bash
-   git clone https://github.com/yourusername/claude-commands.git
+   git clone https://github.com/yourusername/claude-tools.git
    ```
 
-2. **Copy commands to your project** (Option A - Recommended):
+2. **Copy skills to your Claude Code settings** (Option A - Per Project):
    ```bash
-   # Copy the entire .claude/commands directory to your project
-   cp -r claude-commands/.claude/commands /path/to/your/project/.claude/
+   # Copy the skills directory to your project
+   cp -r claude-tools/skills /path/to/your/project/.claude/
    ```
 
-3. **Or use as a global command library** (Option B):
+3. **Or use as a global skills library** (Option B):
    ```bash
-   # Link this repository to Claude Code's global commands directory
-   # (Refer to Claude Code documentation for global command setup)
+   # Copy to your global Claude Code directory
+   cp -r claude-tools/skills ~/.claude/
    ```
 
 4. **Verify installation**:
    - Open your project in Claude Code
-   - Type `/` to see available commands
-   - Your installed commands should appear in the list
+   - The skills should be available based on context triggers or explicit invocation
 
-## Available Commands
+## Available Skills
 
-### 📋 Code Review & Quality
+### Code Review & Quality
 
-#### `/code_review` - Pull Request Analysis
-**File**: [`.claude/commands/code_review.md`](.claude/commands/code_review.md)
+#### `code-review` - Pull Request Analysis
+**Directory**: [`skills/code-review/`](skills/code-review/)
 
-Performs comprehensive PR analysis against software engineering best practices including SOLID principles and GoF design patterns.
+Performs senior-engineer-grade PR code reviews covering correctness, security, performance, testing, design, and observability.
 
-**Usage**:
-```bash
-/code_review <pr-number|pr-url|branch-name>
-```
+**Triggers**: Review a pull request, PR, merge request, diff, branch, or code changes
 
 **Key Features**:
-- Multi-dimensional analysis (quality, security, performance, tests)
-- SOLID principles and design pattern evaluation
-- Prioritized findings (CRITICAL/HIGH/MEDIUM/LOW)
-- Before/after code examples for improvements
+- Multi-dimensional analysis (correctness, security, performance, design)
+- File prioritization by risk (P0-P4)
+- Severity classification (CRITICAL/HIGH/MEDIUM/LOW/PRAISE)
+- Actionable recommendations with code suggestions
+
+---
+
+#### `codebase-review` - Codebase Audit
+**Directory**: [`skills/codebase-review/`](skills/codebase-review/)
+
+Performs a thorough codebase review and produces a prioritized `to_do.md` listing all bug fixes, improvements, and action items.
+
+**Triggers**: Review, audit, or analyze a codebase for bugs, code quality issues, missing tests, TODOs, technical debt
+
+**Key Features**:
+- Systematic file-by-file review
+- Bug detection (logical, security, performance)
 - Test coverage gap identification
+- .NET/C#-specific checks included
+- Prioritized action item list
 
 ---
 
-#### `/refactor` - Refactoring Opportunities
-**File**: [`.claude/commands/refactor.md`](.claude/commands/refactor.md)
+#### `dotnet-refactor` - .NET Refactoring
+**Directory**: [`skills/dotnet-refactor/`](skills/dotnet-refactor/)
 
-Identifies code smells and refactoring opportunities using complexity metrics and design principles.
+Principal-level C#/.NET codebase refactoring with phased plans and regression safety.
 
-**Usage**:
-```bash
-/refactor <file-path|directory|class-name>
-```
+**Triggers**: Refactor, restructure, clean up, or improve C#/.NET code quality
 
 **Key Features**:
-- Cyclomatic complexity analysis
-- Code smell detection (god classes, long methods, feature envy)
-- Duplicate code identification
-- SOLID principles assessment
-- Step-by-step refactoring plans with design pattern suggestions
+- Discovery of code smells and coupling hotspots
+- Baseline unit test safety net
+- Phased refactoring plan generation
+- SOLID principles and design pattern guidance
+- Logging and cross-cutting concern improvements
 
 ---
 
-### 🔒 Security & Performance
+### Security & Performance
 
-#### `/security_scan` - Vulnerability Detection
-**File**: [`.claude/commands/security_scan.md`](.claude/commands/security_scan.md)
+#### `security-scan` - Vulnerability Detection
+**Directory**: [`skills/security-scan/`](skills/security-scan/)
 
-Scans codebase for security vulnerabilities based on OWASP Top 10 and security best practices.
+Comprehensive security vulnerability assessment aligned with OWASP, CWE, and CVSS standards.
 
-**Usage**:
-```bash
-/security_scan <directory|file-pattern>
-```
+**Triggers**: Scan code for security issues, perform security review/audit, find vulnerabilities, check for OWASP Top 10 issues
 
 **Key Features**:
 - OWASP Top 10 vulnerability detection
-- Authentication and authorization flaw identification
-- Cryptographic implementation analysis
-- Dependency vulnerability scanning
-- Prioritized security issues with remediation guidance
+- Multi-language support (JS/TS, Python, Java, Go, C/C++, Ruby, PHP, C#, Rust, Swift, Kotlin)
+- Automated pattern scanning with manual deep-dive
+- Dependency audit for known CVEs
+- CVSS-aligned severity classification
 
 ---
 
-#### `/perf_analysis` - Performance Profiling
-**File**: [`.claude/commands/perf_analysis.md`](.claude/commands/perf_analysis.md)
+#### `performance-analysis` - Performance Profiling
+**Directory**: [`skills/performance-analysis/`](skills/performance-analysis/)
 
-Analyzes application performance bottlenecks and provides optimization recommendations.
+Analyzes application performance bottlenecks with focus on .NET diagnostics.
 
-**Usage**:
-```bash
-/perf_analysis <profiling-data|log-file|class-name>
-```
+**Triggers**: Performance analysis, profiling, optimization recommendations
 
 **Key Features**:
-- CPU and memory bottleneck identification
-- Database query optimization (N+1 detection)
-- Caching opportunity analysis
-- Algorithm efficiency review
-- Before/after performance metrics
+- Anti-pattern detection
+- .NET-specific diagnostics
+- Structured output template
+- Actionable optimization recommendations
 
 ---
 
-### 🐛 Debugging & Analysis
+### Architecture & Design
 
-#### `/rca` - Root Cause Analysis
-**File**: [`.claude/commands/rca.md`](.claude/commands/rca.md)
+#### `architecture-review` - Architecture Analysis
+**Directory**: [`skills/architecture-review/`](skills/architecture-review/)
 
-Analyzes exceptions and stack traces to identify root causes and generate comprehensive fixes with unit tests.
+Generates industry-standard architecture design documents by analyzing codebases across structure, patterns, principles, and quality attributes.
 
-**Usage**:
-```bash
-# First, save your stack trace to a file (e.g., exceptions.txt)
-/rca @exceptions.txt
-```
+**Triggers**: Review or analyze code architecture, create architecture overview, assess code quality, identify architectural strengths/weaknesses
 
 **Key Features**:
-- Exception parsing and call chain analysis
-- Framework-specific issue identification (Spring Boot, JPA, etc.)
-- Root cause identification vs symptom fixes
-- Comprehensive code fixes with file paths and line numbers
-- Unit test generation for reproduction and validation
+- Systematic codebase exploration
+- Design pattern identification (creational, structural, behavioral, architectural)
+- Clean code principles assessment (SOLID, DRY, KISS, YAGNI)
+- Quality attribute ratings (1-5 scale)
+- Mermaid diagram generation
 
 ---
 
-### 🗄️ Database & Migration
+#### `design-doc-review` - Design Document Review
+**Directory**: [`skills/design-doc-review/`](skills/design-doc-review/)
 
-#### `/db_migration` - Migration Safety Analysis
-**File**: [`.claude/commands/db_migration.md`](.claude/commands/db_migration.md)
+Principal-engineer-level design document review against PRD requirements.
 
-Analyzes database schema changes for migration safety and potential risks.
-
-**Usage**:
-```bash
-/db_migration <migration-file|schema-diff>
-```
+**Triggers**: Review, critique, or evaluate a design document, technical design, architecture proposal
 
 **Key Features**:
-- Breaking change identification
-- Data loss risk assessment
-- Performance impact analysis
-- Safe migration strategy generation
-- Rollback procedure recommendations
+- PRD alignment verification
+- 11 review dimensions (architecture, security, scalability, availability, etc.)
+- Severity-based issue classification (P0-P3)
+- Actionable recommendations
 
 ---
 
-### 📐 Design & Architecture
+#### `prd-to-design-doc` - PRD to Design Document
+**Directory**: [`skills/prd-to-design-doc/`](skills/prd-to-design-doc/)
 
-#### `/design-doc` - Design Document Generation
-**File**: [`.claude/commands/design-doc.md`](.claude/commands/design-doc.md)
+Transforms Product Requirements Documents into Developer Design Documents following RFC conventions used by Google, Uber, Airbnb, Stripe, and others.
 
-Generates comprehensive developer design documents from product and business requirement documents.
-
-**Usage**:
-```bash
-/design-doc <path/to/prd.md> <path/to/brd.md>
-```
+**Triggers**: Create a design document from a PRD, generate an RFC, create technical design doc
 
 **Key Features**:
-- Requirements analysis and traceability
-- System architecture and component design
-- API specifications and data models
-- Testing strategy and quality requirements
-- Task breakdown with priorities and dependencies
-- Risk assessment and mitigation strategies
+- Trade-off focused analysis
+- Alternatives considered with comparison
+- Cross-cutting concerns (security, privacy, observability)
+- Phased rollout planning
+- Mermaid architecture diagrams
 
 ---
 
-#### `/design_review` - Design Document Review
-**File**: [`.claude/commands/design_review.md`](.claude/commands/design_review.md)
+### Documentation & Requirements
 
-Conducts FAANG-level comprehensive design document reviews with Principal Engineer rigor.
+#### `prd-generator` / `code-to-prd-doc` - PRD from Codebase
+**Directory**: [`skills/prd-generator/`](skills/prd-generator/) | [`skills/code-to-prd-doc/`](skills/code-to-prd-doc/)
 
-**Usage**:
-```bash
-/design_review <design-doc-path>
-```
+Reverse-engineers a codebase into a formal Product Requirements Document structured for Jira work item creation.
+
+**Triggers**: Generate PRD, analyze codebase, document requirements, reverse-engineer features, prepare Jira epics from code
 
 **Key Features**:
-- PRD alignment and requirements coverage verification
-- Architecture pattern evaluation (SOLID, GoF patterns)
-- Security analysis (OWASP, threat modeling)
-- Scalability and performance assessment
-- Operational readiness review
-- Prioritized issues with actionable recommendations
+- Feature extraction by category
+- Gap and technical debt identification
+- Jira-ready epic/story/task breakdown
+- .NET/C# specific analysis patterns
+- Fibonacci story point estimation
 
 ---
 
-### 📚 Documentation & Onboarding
+### Testing & Bug Fixing
 
-#### `/onboard` - Codebase Onboarding
-**File**: [`.claude/commands/onboard.md`](.claude/commands/onboard.md)
+#### `tdd-bugfix` - Test-Driven Bug Fixing
+**Directory**: [`skills/tdd-bugfix/`](skills/tdd-bugfix/)
 
-Generates comprehensive onboarding documentation for new developers joining the codebase.
+Fixes bugs using test-driven development methodology with strict adherence to project conventions.
 
-**Usage**:
-```bash
-/onboard
-```
+**Triggers**: Fix a bug using TDD, safe bug fix with tests
 
 **Key Features**:
-- Deep codebase analysis with architecture diagrams
-- Technology stack documentation
-- Key concepts and design patterns identification
-- Development workflow setup instructions
-- Prioritized issues and improvement opportunities
-- Concise, actionable onboarding guide (1-2 pages)
+- Project convention discovery
+- Failing test creation before fix
+- Project test framework/style matching
+- Full regression test verification
 
 ---
 
-### 💼 Additional Tools
+#### `qa-test-plan-review` - Railway QA Test Plan Review
+**Directory**: [`skills/qa-test-plan-review/`](skills/qa-test-plan-review/)
 
-#### `/dd_startup` - Startup Evaluation
-**File**: [`.claude/commands/dd_startup.md`](.claude/commands/dd_startup.md)
+Railway QA Lead Engineer skill for reviewing test plans against CENELEC EN 50716/EN 50128, EN 50126, and EN 50129 standards.
 
-Comprehensive startup company analysis for job seekers conducting due diligence.
-
-**Usage**:
-```bash
-# Edit the file to add company information, then run:
-/dd_startup
-```
+**Triggers**: Railway test plan review, CENELEC compliance testing, signaling test coverage, safety-critical test case generation
 
 **Key Features**:
-- Financial stability and funding analysis
-- Founder and leadership team evaluation
-- Product-market fit assessment
-- Growth potential and career opportunity analysis
-- Risk matrix and SWOT analysis
-- Interview questions based on identified gaps
+- SIL-graded requirement analysis
+- Gap analysis against railway standards
+- CSV test case generation matching input format
+- Safety/fail-safe scenario coverage
 
 ---
 
-## Command Structure
+### Utilities
 
-All commands follow a consistent, systematic approach:
+#### `git-rebase-main` - Git Rebase Helper
+**Directory**: [`skills/git-rebase-main/`](skills/git-rebase-main/)
 
-1. **Input Validation**: Ensures required parameters and context are available
-2. **Context Gathering**: Collects relevant information from codebase, git history, or documentation
-3. **Systematic Analysis**: Applies domain expertise and best practices
-4. **Structured Output**: Provides prioritized, actionable recommendations
-5. **Verification**: Includes validation steps and success criteria
+Fetches and rebases current branch onto main/master with automatic stash handling.
 
-## Benefits
+**Triggers**: Update branch with main, sync with default branch, pull and rebase
 
-- **⚡ Productivity**: Automate time-consuming analysis and documentation tasks
-- **🎯 Consistency**: Standardized analysis approaches across all scenarios
-- **📊 Thoroughness**: Comprehensive coverage of quality, security, and performance dimensions
-- **✅ Actionability**: Prioritized recommendations with specific code examples
-- **🤝 Collaboration**: Structured outputs perfect for team reviews and discussions
-- **📚 Best Practices**: Incorporates industry standards and framework-specific expertise
+**Key Features**:
+- Auto-detects main vs master
+- Automatic stash/unstash via `--autostash`
+- Conflict resolution guidance
 
-## Usage Tips
+---
 
-1. **File References**: Use `@filename` to reference files in your prompts (e.g., `/rca @exceptions.txt`)
-2. **Combine Commands**: Use multiple commands in sequence for comprehensive analysis
-3. **Customize**: Edit command files to adapt them to your team's specific needs
-4. **Iterate**: Commands are designed for iterative refinement based on initial output
+#### `keybindings-help` - Keyboard Shortcuts Help
+**Directory**: [`skills/keybindings-help/`](skills/keybindings-help/)
+
+Helps customize Claude Code keyboard shortcuts by editing `~/.claude/keybindings.json`.
+
+**Triggers**: Rebind keys, add chord bindings, customize keybindings, change submit key
+
+**Key Features**:
+- Complete keybindings.json reference
+- All contexts and actions documented
+- Chord binding support
+- Common customization examples
+
+---
+
+## Prompt Templates
+
+Reusable prompt templates in the `prompts/` directory:
+
+| File | Purpose |
+|------|---------|
+| [`analyze_paper.md`](prompts/analyze_paper.md) | Academic paper analysis template |
+| [`architecture_analysis.md`](prompts/architecture_analysis.md) | Comprehensive codebase architecture review |
+| [`design_document.md`](prompts/design_document.md) | Design document generation template |
+| [`engineering_brief.md`](prompts/engineering_brief.md) | Daily engineering brief from Jira data |
+
+---
 
 ## Repository Structure
 
 ```
-claude-commands/
-├── .claude/
-│   └── commands/          # Slash commands for Claude Code
-│       ├── code_review.md
-│       ├── db_migration.md
-│       ├── design-doc.md
-│       ├── design_review.md
-│       ├── onboard.md
-│       ├── perf_analysis.md
-│       ├── rca.md
-│       ├── refactor.md
-│       ├── security_scan.md
-│       └── dd_startup.md
-├── prompts/               # Reusable prompt templates
+claude-tools/
+├── skills/                          # Claude Code skills
+│   ├── architecture-review/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── code-review/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── code-to-prd-doc/
+│   │   ├── SKILL.md
+│   │   ├── assets/
+│   │   └── references/
+│   ├── codebase-review/
+│   │   └── SKILL.md
+│   ├── design-doc-review/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── dotnet-refactor/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── git-rebase-main/
+│   │   ├── SKILL.md
+│   │   └── scripts/
+│   ├── keybindings-help/
+│   │   └── SKILL.md
+│   ├── performance-analysis/
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   └── scripts/
+│   ├── prd-generator/
+│   │   ├── SKILL.md
+│   │   ├── assets/
+│   │   └── references/
+│   ├── prd-to-design-doc/
+│   │   └── SKILL.md
+│   ├── qa-test-plan-review/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   ├── security-scan/
+│   │   ├── SKILL.md
+│   │   ├── references/
+│   │   └── scripts/
+│   └── tdd-bugfix/
+│       └── SKILL.md
+├── prompts/                         # Reusable prompt templates
 │   ├── analyze_paper.md
-│   └── design_document.md
+│   ├── architecture_analysis.md
+│   ├── design_document.md
+│   └── engineering_brief.md
+├── workflow/                        # Workflow documentation & assets
 ├── LICENSE
 └── README.md
 ```
 
+## Skill Structure
+
+Each skill follows a consistent structure:
+
+```
+skill-name/
+├── SKILL.md          # Main skill definition with frontmatter and workflow
+├── references/       # Supporting documentation and checklists
+├── assets/           # Templates and output formats
+└── scripts/          # Automation scripts (if applicable)
+```
+
+The `SKILL.md` file contains:
+- **Frontmatter**: Name, description, and trigger conditions
+- **Workflow**: Step-by-step execution process
+- **References**: Links to supporting materials
+
+## Benefits
+
+- **Productivity**: Automate time-consuming analysis and documentation tasks
+- **Consistency**: Standardized analysis approaches across all scenarios
+- **Thoroughness**: Comprehensive coverage of quality, security, and performance dimensions
+- **Actionability**: Prioritized recommendations with specific code examples
+- **Collaboration**: Structured outputs perfect for team reviews and discussions
+- **Best Practices**: Incorporates industry standards (OWASP, SOLID, CENELEC, etc.)
+
+## Usage Tips
+
+1. **Context Triggers**: Skills activate automatically based on your request context
+2. **Reference Files**: Skills use supporting references for comprehensive analysis
+3. **Customization**: Edit SKILL.md files to adapt to your team's specific needs
+4. **Iteration**: Skills are designed for iterative refinement based on initial output
+5. **Headless/CI Automation**: Run the full agentic workflow non-interactively.
+
+```bash
+# Run the full workflow non-interactively
+claude -p "
+  Implement rate limiting middleware on the ASP.NET Core API using
+  System.Threading.RateLimiting. Apply a fixed-window policy of
+  100 requests per minute per client IP on all /api/* endpoints.
+  Follow this workflow:
+  1. Use software-architect agent to produce implementation plan.
+  2. Use principal-engineer agent to review plan and implement with tests.
+  3. Use code-reviewer agent to review and fix all issues. If BLOCKED,
+     use principal-engineer to rework, then re-run code-reviewer.
+  4. Use test-runner agent to run all four test tiers.
+  5. If any tier fails, use principal-engineer to fix, then code-reviewer
+     to verify, then test-runner to re-test. Repeat until green.
+  Print WORKFLOW_SUCCESS if everything passes, WORKFLOW_FAILED otherwise.
+" --allowedTools "Read,Write,Edit,Bash,Grep,Glob,MultiEdit" --output-format json
+
+```
+
+## Multiagent Workflow Prompt
+
+> I need to add rate limiting middleware to the ASP.NET Core API using
+  the built-in System.Threading.RateLimiting. Apply a fixed-window
+  policy of 100 requests per minute per client IP on all /api/* endpoints.
+  Please follow this workflow:
+  1. Use the software-architect agent to analyze the codebase and produce
+     a detailed implementation plan with unit test strategy.
+  2. Use the principal-engineer agent to review and refine the plan, then
+     implement the code changes with unit tests. Unit tests must pass.
+  3. Use the code-reviewer agent to review the implementation and fix any
+     issues directly. Build and unit tests must pass after fixes.
+     If the verdict is BLOCKED, use the principal-engineer agent to rework
+     the implementation, then re-run the code-reviewer agent.
+  4. Use the test-runner agent to run all four test tiers (unit, functional,
+     integration, pact).
+  5. If any tests fail due to the change, use the principal-engineer agent
+     to fix them, then the code-reviewer agent to verify the fixes, then
+     re-run the test-runner agent. Repeat until all tiers pass.
+  6. Summarize the final result.
+
+
+
+
 ## Contributing
 
-We welcome contributions! When adding new commands:
+We welcome contributions! When adding new skills:
 
-1. **Follow the structure**: Use the established format and style
-2. **Be comprehensive**: Include detailed analysis steps and examples
-3. **Provide clear usage**: Document parameters, usage patterns, and expected outputs
-4. **Test thoroughly**: Validate commands with real-world scenarios
-5. **Update README**: Add documentation for new commands to this file
-6. **Include examples**: Show sample inputs and outputs where helpful
+1. **Follow the structure**: Use the established SKILL.md format with frontmatter
+2. **Be comprehensive**: Include detailed workflow steps and references
+3. **Provide clear triggers**: Document what user requests activate the skill
+4. **Include references**: Add supporting documentation in a `references/` subdirectory
+5. **Test thoroughly**: Validate skills with real-world scenarios
+6. **Update README**: Add documentation for new skills to this file
 
 ## License
 
@@ -306,10 +405,10 @@ This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENS
 
 ## Support
 
-- **Issues**: Report bugs or request features via [GitHub Issues](https://github.com/yourusername/claude-commands/issues)
+- **Issues**: Report bugs or request features via [GitHub Issues](https://github.com/yourusername/claude-tools/issues)
 - **Documentation**: See [Claude Code documentation](https://docs.anthropic.com/claude/docs) for platform details
-- **Community**: Share your custom commands and improvements!
+- **Community**: Share your custom skills and improvements!
 
 ---
 
-**Made with ❤️ for the engineering community**
+**Made for the engineering community**
