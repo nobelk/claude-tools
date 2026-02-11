@@ -384,7 +384,15 @@ claude -p "
      to fix them, then the code-reviewer agent to verify the fixes, then
      re-run the test-runner agent. Repeat until all tiers pass.
   6. Summarize the final result.
-
+  
+  
+  1. Use principal-engineer agent to review plan and implement with tests.
+  2. Use code-reviewer agent to review and fix all issues. If BLOCKED,
+     use principal-engineer to rework, then re-run code-reviewer.
+  3. Use test-runner agent to run all four test tiers.
+  4. If any tier fails, use principal-engineer to fix, then code-reviewer
+     to verify, then test-runner to re-test. Repeat until green.
+  Print WORKFLOW_SUCCESS if everything passes, WORKFLOW_FAILED otherwise.
 
 
 
