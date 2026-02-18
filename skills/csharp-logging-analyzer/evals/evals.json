@@ -1,0 +1,53 @@
+{
+  "skill_name": "csharp-logging-analyzer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Analyze this C# Web API project and create a logging plan. The project has a controller, a service, and a repository but almost no logging.",
+      "expected_output": "A logging_plan.md file with sections covering current state (noting lack of logging), gap analysis across all layers (controller, service, repository), concrete code snippets using ILogger<T>, unit test examples, and a prioritized implementation checklist",
+      "files": [],
+      "assertions": [
+        "logging_plan.md file is created",
+        "Plan includes an Executive Summary section",
+        "Plan includes a Current Logging State section that identifies the .NET version from .csproj",
+        "Plan identifies missing logging in catch blocks as P0/Critical",
+        "Plan flags service classes missing ILogger<T> injection as a gap",
+        "All code snippets use structured logging (message templates with {PropertyName}), not string interpolation",
+        "Plan includes a Logging Configuration section with appsettings.json example",
+        "Plan includes unit test code that matches the codebase's test framework (or defaults to xUnit + Moq)",
+        "Moq test assertions use It.IsAny<Exception?>() not null for the exception parameter",
+        "Plan includes a Review Notes section confirming self-review was performed",
+        "Plan recommends high-performance [LoggerMessage] for hot paths if .NET 6+"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My .NET 8 project already uses Serilog. Analyze the codebase and create a logging improvement plan that follows our existing Serilog conventions.",
+      "expected_output": "A logging_plan.md that detects and follows the existing Serilog patterns, does not recommend switching to a different framework, and provides Serilog-specific code examples",
+      "files": [],
+      "assertions": [
+        "Plan detects Serilog as the existing framework",
+        "Plan does NOT recommend switching away from Serilog",
+        "Code snippets follow Serilog conventions (e.g., Log.ForContext, destructuring with @)",
+        "Plan includes Serilog-specific sink configuration recommendations",
+        "Plan maintains consistency with existing log message style",
+        "If OpenTelemetry is configured, plan does NOT add redundant manual correlation IDs"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Create a logging plan for my microservice that runs in Docker. Focus on making logs useful for production incident investigation.",
+      "expected_output": "A logging_plan.md optimized for containerized deployment with JSON output, correlation IDs, and Docker stdout recommendations",
+      "files": [],
+      "assertions": [
+        "Plan recommends JSON-formatted console output (AddJsonConsole or CompactJsonFormatter) for Docker",
+        "Plan recommends logging to stdout as primary output, not file-based logging inside containers",
+        "Plan includes correlation ID / trace ID propagation strategy",
+        "Plan covers request/response logging with timing",
+        "Plan addresses external integration logging (HTTP clients, etc.)",
+        "Plan includes Logging Configuration section with environment-variable override guidance",
+        "If file logging is mentioned, plan notes the need for mounted volumes in containers"
+      ]
+    }
+  ]
+}
